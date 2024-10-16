@@ -1,10 +1,14 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
+import 'package:app_thu_tien/const.dart';
 import 'package:app_thu_tien/model/pay.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:toastification/toastification.dart';
 
 class CommettrePage extends StatefulWidget {
   const CommettrePage({super.key});
@@ -14,11 +18,18 @@ class CommettrePage extends StatefulWidget {
 }
 
 class _CommettrePageState extends State<CommettrePage> {
+  bool resReel = false;
   var db = FirebaseFirestore.instance;
   DateTime dateTime = Timestamp.now().toDate();
   String dateWhere =
       '${Timestamp.now().toDate().day}/${Timestamp.now().toDate().month}/${Timestamp.now().toDate().year}';
 
+  PayMdl reel = PayMdl(
+    typeService: 0,
+    typePayment: 5,
+    isTip: true,
+  );
+  TextEditingController reelCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -236,9 +247,31 @@ class _CommettrePageState extends State<CommettrePage> {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: CupertinoListTile(
+                  leading: const SizedBox(
+                    width: 60,
+                    child: Text('ESP réel', textAlign: TextAlign.start),
+                  ),
+                  leadingSize: 60,
+                  leadingToTitle: 10,
+                  title: CupertinoTextField(
+                    key: const Key('reel'),
+                    controller: reelCtrl,
+                    decoration: Const.decoration,
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      reel.value = double.tryParse(value) ?? 0;
+                      setState(() {
+                        resReel = reel.value != 0;
+                      });
+                    },
+                  ),
+                ),
+              ),
               Container(
-                padding: const EdgeInsets.only(
-                    top: 30, left: 10, right: 10, bottom: 10),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -257,10 +290,25 @@ class _CommettrePageState extends State<CommettrePage> {
                         }
                       },
                     ),
-                    CupertinoButton.filled(
+                    CupertinoButton(
+                      color: resReel
+                          ? CupertinoColors.activeBlue
+                          : CupertinoColors.label,
                       padding: const EdgeInsets.symmetric(horizontal: 50),
                       child: const Text('Commettre'),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (resReel) {
+                          submitForm(context);
+                        } else {
+                          toastification.show(
+                            context: context,
+                            title: const Text(
+                                'Il n`y a pas encore de type de service'),
+                            autoCloseDuration: const Duration(seconds: 3),
+                            type: ToastificationType.warning,
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -270,6 +318,32 @@ class _CommettrePageState extends State<CommettrePage> {
         ),
       ),
     );
+  }
+
+  Future submitForm(BuildContext context) async {
+    context.loaderOverlay.show();
+    if (reel.value != 0) {
+      DateTime dateTime = Timestamp.now().toDate();
+      reel.date = '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+      GetStorage box = GetStorage();
+      String uid = box.read('uid');
+      reel.uid = uid;
+      await db.collection('payment').add(reel.toJson()).then((e) {
+        toastification.show(
+          context: context,
+          title: const Text('Nouveau compte créé'),
+          autoCloseDuration: const Duration(milliseconds: 1500),
+          type: ToastificationType.success,
+        );
+        reel.value = 0;
+      });
+      await Future.delayed(Durations.medium1);
+    }
+    reelCtrl.text = '';
+    setState(() {
+      resReel = reel.value != 0;
+    });
+    context.loaderOverlay.hide();
   }
 }
 

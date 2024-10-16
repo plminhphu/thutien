@@ -9,7 +9,7 @@ rm -rf ~/.gradle/caches/
 flutter build appbundle
 `````
 `````
-flutter build apk --release
+flutter build apk --release --no-tree-shake-icons
 `````
 flutter run --release
 

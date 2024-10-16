@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         );
       },
       child: GetCupertinoApp(
-        title: 'Collect Money',
+        title: 'Money Management',
         home: Const.isAdmin ? const DashboardPage() : const AuthPage(),
         debugShowCheckedModeBanner: false,
         onInit: () async {},

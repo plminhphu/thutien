@@ -1,5 +1,5 @@
 name: app_thu_tien
-description: "Collect Money"
+description: "Money Management"
 publish_to: 'none'
 
 version: 1.0.0+1

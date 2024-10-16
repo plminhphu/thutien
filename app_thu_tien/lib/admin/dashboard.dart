@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:app_thu_tien/admin/controller.dart';
 import 'package:app_thu_tien/admin/users.dart';
 import 'package:app_thu_tien/client/commettre.dart';
 import 'package:app_thu_tien/model/pay.dart';
@@ -20,7 +19,6 @@ class _DashboardPageState extends State<DashboardPage> {
   DateTime dateTime = Timestamp.now().toDate();
   String dateWhere =
       '${Timestamp.now().toDate().day}/${Timestamp.now().toDate().month}/${Timestamp.now().toDate().year}';
-  Controller controller = Get.put(Controller(), tag: 'Controller');
 
   @override
   Widget build(BuildContext context) {
@@ -266,7 +264,6 @@ class BodyList extends StatefulWidget {
 }
 
 class _BodyListState extends State<BodyList> {
-  Controller controller = Get.find(tag: 'Controller');
   double countESP = 0.0;
   double countCB = 0.0;
   double countCHQ = 0.0;
