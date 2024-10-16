@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "886121278075",
+    "project_id": "app-thu-tien",
+    "storage_bucket": "app-thu-tien.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886121278075:android:d3f07c01fee3c7ae0a90de",
+        "android_client_info": {
+          "package_name": "vn.plminhphu.thutien"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_2q3Oe7qdPrz8HrV09U0BCB70pCf0_hQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
