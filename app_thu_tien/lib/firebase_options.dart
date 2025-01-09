@@ -41,30 +41,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyArv2avm79I_PEQIywiU-tl_M6Bzp-FhHY',
-    appId: '1:886121278075:web:d01e11dc0ef59a4c0a90de',
-    messagingSenderId: '886121278075',
-    projectId: 'app-thu-tien',
-    authDomain: 'app-thu-tien.firebaseapp.com',
-    storageBucket: 'app-thu-tien.appspot.com',
-    measurementId: 'G-XSDEM66HZL',
+    apiKey: 'AIzaSyAQS8PJtOlzpl1nbeBMLLDIInLZ5rk-Y5c',
+    appId: '1:1030920963113:web:5d11a8918f21b9e1630838',
+    messagingSenderId: '1030920963113',
+    projectId: 'app-thu-tien-2',
+    authDomain: 'app-thu-tien-2.firebaseapp.com',
+    storageBucket: 'app-thu-tien-2.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA_2q3Oe7qdPrz8HrV09U0BCB70pCf0_hQ',
-    appId: '1:886121278075:android:d3f07c01fee3c7ae0a90de',
-    messagingSenderId: '886121278075',
-    projectId: 'app-thu-tien',
-    storageBucket: 'app-thu-tien.appspot.com',
+    apiKey: 'AIzaSyAzq8J-sS6TtOM20cJOxdLN7odOeMaZpnI',
+    appId: '1:1030920963113:android:4077d3f040b43283630838',
+    messagingSenderId: '1030920963113',
+    projectId: 'app-thu-tien-2',
+    storageBucket: 'app-thu-tien-2.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCPK4Hx1pcHlv3FADyySAbuvmXmah2XB-4',
-    appId: '1:886121278075:ios:b41fa7ec9583ee050a90de',
-    messagingSenderId: '886121278075',
-    projectId: 'app-thu-tien',
-    storageBucket: 'app-thu-tien.appspot.com',
-    iosBundleId: 'com.example.appThuTien',
+    apiKey: 'AIzaSyCBQ1SZ94eX2QQhX3b9GMr3ZYNqlgTOwXw',
+    appId: '1:1030920963113:ios:9779b0174610d43b630838',
+    messagingSenderId: '1030920963113',
+    projectId: 'app-thu-tien-2',
+    storageBucket: 'app-thu-tien-2.firebasestorage.app',
+    iosBundleId: 'vn.plminhphu.thutien',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

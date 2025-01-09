@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "886121278075",
-    "project_id": "app-thu-tien",
-    "storage_bucket": "app-thu-tien.appspot.com"
+    "project_number": "1030920963113",
+    "project_id": "app-thu-tien-2",
+    "storage_bucket": "app-thu-tien-2.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:886121278075:android:d3f07c01fee3c7ae0a90de",
+        "mobilesdk_app_id": "1:1030920963113:android:4077d3f040b43283630838",
         "android_client_info": {
           "package_name": "vn.plminhphu.thutien"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA_2q3Oe7qdPrz8HrV09U0BCB70pCf0_hQ"
+          "current_key": "AIzaSyAzq8J-sS6TtOM20cJOxdLN7odOeMaZpnI"
         }
       ],
       "services": {

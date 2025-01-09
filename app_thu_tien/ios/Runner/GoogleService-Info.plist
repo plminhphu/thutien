@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCPK4Hx1pcHlv3FADyySAbuvmXmah2XB-4</string>
+	<string>AIzaSyCBQ1SZ94eX2QQhX3b9GMr3ZYNqlgTOwXw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>886121278075</string>
+	<string>1030920963113</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.appThuTien</string>
+	<string>vn.plminhphu.thutien</string>
 	<key>PROJECT_ID</key>
-	<string>app-thu-tien</string>
+	<string>app-thu-tien-2</string>
 	<key>STORAGE_BUCKET</key>
-	<string>app-thu-tien.appspot.com</string>
+	<string>app-thu-tien-2.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:886121278075:ios:b41fa7ec9583ee050a90de</string>
+	<string>1:1030920963113:ios:9779b0174610d43b630838</string>
 </dict>
 </plist>
