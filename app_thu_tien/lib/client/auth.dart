@@ -2,9 +2,8 @@
 
 import 'package:app_thu_tien/client/commettre.dart';
 import 'package:app_thu_tien/client/payer.dart';
-import 'package:app_thu_tien/const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:toastification/toastification.dart';
@@ -19,7 +18,7 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   var db = FirebaseFirestore.instance;
   Widget authHead = const SizedBox();
-  Widget authBody = const Center(child: CupertinoActivityIndicator());
+  Widget authBody = const Center(child: CircularProgressIndicator());
   Widget authButton = const SizedBox();
   Widget authLogout = const SizedBox();
   TextEditingController controllerUsername = TextEditingController();
@@ -31,12 +30,12 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: authHead,
-        trailing: authLogout,
+    return Scaffold(
+      appBar: AppBar(
+        title: authHead,
+        leading: authLogout,
       ),
-      child: SizedBox(
+      body: SizedBox(
         height: context.height,
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -78,18 +77,17 @@ class _AuthPageState extends State<AuthPage> {
       authHead = Text('Bonjour ${data['fullname']}');
       authLogout = GestureDetector(
         child: const Icon(
-          CupertinoIcons.square_arrow_right,
+          Icons.arrow_right,
         ),
         onTap: () async {
-          await showCupertinoDialog(
+          await showDialog(
             context: context,
             barrierDismissible: true,
             builder: (context) {
-              return CupertinoAlertDialog(
+              return AlertDialog(
                 title: const Text('Déconnectez-vous de votre compte'),
                 actions: [
-                  CupertinoDialogAction(
-                    isDestructiveAction: true,
+                  ElevatedButton(
                     child: const Text('Confirmer'),
                     onPressed: () async {
                       if (Navigator.canPop(context)) {
@@ -101,9 +99,9 @@ class _AuthPageState extends State<AuthPage> {
                       loadAuth();
                     },
                   ),
-                  CupertinoDialogAction(
+                  TextButton(
                     child: const Text('Fermer',
-                        style: TextStyle(color: CupertinoColors.label)),
+                        style: TextStyle(color: Colors.grey)),
                     onPressed: () {
                       if (Navigator.canPop(context)) {
                         Navigator.pop(context);
@@ -117,17 +115,16 @@ class _AuthPageState extends State<AuthPage> {
         },
       );
       authBody = const SizedBox();
-      authButton = CupertinoButton.filled(
+      authButton = TextButton(
         onPressed: () async {
-          await showCupertinoDialog(
+          await showDialog(
             context: context,
             barrierDismissible: true,
             builder: (context) {
-              return CupertinoAlertDialog(
+              return AlertDialog(
                 title: const Text('Déconnectez-vous de votre compte'),
                 actions: [
-                  CupertinoDialogAction(
-                    isDefaultAction: true,
+                  ElevatedButton(
                     child: const Text('Payer'),
                     onPressed: () async {
                       if (Navigator.canPop(context)) {
@@ -135,7 +132,7 @@ class _AuthPageState extends State<AuthPage> {
                       }
                       await Navigator.push(
                         context,
-                        CupertinoPageRoute<Widget>(
+                        MaterialPageRoute<Widget>(
                           builder: (BuildContext context) {
                             return const PayerPage();
                           },
@@ -143,8 +140,7 @@ class _AuthPageState extends State<AuthPage> {
                       );
                     },
                   ),
-                  CupertinoDialogAction(
-                    isDefaultAction: true,
+                  ElevatedButton(
                     child: const Text('Commettre'),
                     onPressed: () async {
                       if (Navigator.canPop(context)) {
@@ -152,7 +148,7 @@ class _AuthPageState extends State<AuthPage> {
                       }
                       await Navigator.push(
                         context,
-                        CupertinoPageRoute<Widget>(
+                        MaterialPageRoute<Widget>(
                           builder: (BuildContext context) {
                             return const CommettrePage();
                           },
@@ -160,9 +156,8 @@ class _AuthPageState extends State<AuthPage> {
                       );
                     },
                   ),
-                  CupertinoDialogAction(
-                    child: const Text('Fermer',
-                        style: TextStyle(color: CupertinoColors.label)),
+                  TextButton(
+                    child: const Text('Fermer'),
                     onPressed: () {
                       if (Navigator.canPop(context)) {
                         Navigator.pop(context);
@@ -191,8 +186,7 @@ class _AuthPageState extends State<AuthPage> {
           children: [
             const Text('Nom de connexion'),
             const SizedBox(height: 5),
-            CupertinoTextField(
-              decoration: Const.decoration,
+            TextField(
               controller: controllerUsername,
               autofocus: false,
             ),
@@ -200,7 +194,7 @@ class _AuthPageState extends State<AuthPage> {
           ],
         ),
       );
-      authButton = CupertinoButton.filled(
+      authButton = TextButton(
         child: const Text('Se connecter'),
         onPressed: () async {
           if (controllerUsername.text.isNotEmpty) {
@@ -243,8 +237,8 @@ class _AuthPageState extends State<AuthPage> {
   loading() {
     setState(() {
       authHead = const Text('Connexion....');
-      authButton = CupertinoButton(
-        child: const CupertinoActivityIndicator(),
+      authButton = TextButton(
+        child: const CircularProgressIndicator(),
         onPressed: () {},
       );
     });

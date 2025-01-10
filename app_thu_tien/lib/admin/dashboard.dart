@@ -4,7 +4,7 @@ import 'package:app_thu_tien/admin/users.dart';
 import 'package:app_thu_tien/client/commettre.dart';
 import 'package:app_thu_tien/model/pay.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -22,26 +22,29 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: const Text('Utilisateur administrateur'),
-        trailing: GestureDetector(
-          child: const Icon(
-            CupertinoIcons.person_3,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Utilisateur administrateur'),
+        actions: [
+          GestureDetector(
+            child: const Icon(
+              Icons.person,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<Widget>(
+                  builder: (BuildContext context) {
+                    return const UsersPage();
+                  },
+                ),
+              );
+            },
           ),
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute<Widget>(
-                builder: (BuildContext context) {
-                  return const UsersPage();
-                },
-              ),
-            );
-          },
-        ),
+          const SizedBox(width: 20),
+        ],
       ),
-      child: SafeArea(
+      body: SafeArea(
         child: SizedBox(
           width: context.width,
           height: context.height,
@@ -51,9 +54,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                 child: Table(
                   border: const TableBorder(
-                    top: BorderSide(color: CupertinoColors.systemGrey2),
-                    left: BorderSide(color: CupertinoColors.systemGrey2),
-                    right: BorderSide(color: CupertinoColors.systemGrey2),
+                    top: BorderSide(color: Colors.grey),
+                    left: BorderSide(color: Colors.grey),
+                    right: BorderSide(color: Colors.grey),
                   ),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
@@ -62,7 +65,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: Text(
                               'Date: $dateWhere',
                               style: const TextStyle(
@@ -74,43 +77,31 @@ class _DashboardPageState extends State<DashboardPage> {
                         TableCell(
                           child: GestureDetector(
                             onTap: () async {
-                              showCupertinoModalPopup<void>(
+                              showDatePicker(
                                 context: context,
-                                builder: (BuildContext context) => Container(
-                                  height: 216,
-                                  padding: const EdgeInsets.only(top: 6.0),
-                                  margin: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom,
-                                  ),
-                                  color: CupertinoColors.systemBackground
-                                      .resolveFrom(context),
-                                  child: SafeArea(
-                                    top: false,
-                                    child: CupertinoDatePicker(
-                                      initialDateTime: dateTime,
-                                      minimumDate: dateTime
-                                          .subtract(const Duration(days: 3)),
-                                      maximumDate:
-                                          dateTime.add(const Duration(days: 7)),
-                                      mode: CupertinoDatePickerMode.date,
-                                      showDayOfWeek: false,
-                                      onDateTimeChanged: (DateTime dt) {
-                                        setState(() {
-                                          dateTime = dt;
-                                          dateWhere =
-                                              '${dateTime.day}/${dateTime.month}/${dateTime.year}';
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
+                                initialDate: dateTime,
+                                firstDate:
+                                    dateTime.subtract(const Duration(days: 3)),
+                                lastDate: dateTime.add(const Duration(days: 7)),
+                              ).then(
+                                (value) {
+                                  if (value != null) {
+                                    setState(() {
+                                      dateTime = value;
+                                      dateWhere =
+                                          '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+                                    });
+                                  }
+                                },
                               );
                             },
                             child: const Row(
                               children: [
-                                Icon(CupertinoIcons.calendar),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  child: Icon(Icons.calendar_today_outlined),
+                                ),
+                                Text('Choose day'),
                               ],
                             ),
                           ),
@@ -124,14 +115,12 @@ class _DashboardPageState extends State<DashboardPage> {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Table(
                   border: const TableBorder(
-                    top: BorderSide(color: CupertinoColors.systemGrey2),
-                    left: BorderSide(color: CupertinoColors.systemGrey2),
-                    right: BorderSide(color: CupertinoColors.systemGrey2),
-                    bottom: BorderSide(color: CupertinoColors.systemGrey2),
-                    horizontalInside:
-                        BorderSide(color: CupertinoColors.systemGrey2),
-                    verticalInside:
-                        BorderSide(color: CupertinoColors.systemGrey2),
+                    top: BorderSide(color: Colors.grey),
+                    left: BorderSide(color: Colors.grey),
+                    right: BorderSide(color: Colors.grey),
+                    bottom: BorderSide(color: Colors.grey),
+                    horizontalInside: BorderSide(color: Colors.grey),
+                    verticalInside: BorderSide(color: Colors.grey),
                   ),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
@@ -140,7 +129,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'Manucure',
                               textAlign: TextAlign.center,
@@ -153,7 +142,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'Coiffure',
                               textAlign: TextAlign.center,
@@ -172,13 +161,11 @@ class _DashboardPageState extends State<DashboardPage> {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Table(
                   border: const TableBorder(
-                    left: BorderSide(color: CupertinoColors.systemGrey2),
-                    right: BorderSide(color: CupertinoColors.systemGrey2),
-                    bottom: BorderSide(color: CupertinoColors.systemGrey2),
-                    horizontalInside:
-                        BorderSide(color: CupertinoColors.systemGrey2),
-                    verticalInside:
-                        BorderSide(color: CupertinoColors.systemGrey2),
+                    left: BorderSide(color: Colors.grey),
+                    right: BorderSide(color: Colors.grey),
+                    bottom: BorderSide(color: Colors.grey),
+                    horizontalInside: BorderSide(color: Colors.grey),
+                    verticalInside: BorderSide(color: Colors.grey),
                   ),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
@@ -187,7 +174,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'ESP',
                               textAlign: TextAlign.center,
@@ -200,7 +187,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'CB',
                               textAlign: TextAlign.center,
@@ -213,7 +200,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'ESP',
                               textAlign: TextAlign.center,
@@ -226,7 +213,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'CB',
                               textAlign: TextAlign.center,

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthPage extends StatefulWidget {
@@ -11,8 +11,8 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: SizedBox(
+    return Scaffold(
+      body: SizedBox(
         height: context.height,
         child: const Column(
           mainAxisSize: MainAxisSize.max,

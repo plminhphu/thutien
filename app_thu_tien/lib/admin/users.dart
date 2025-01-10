@@ -1,8 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:app_thu_tien/const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toastification/toastification.dart';
 
@@ -20,19 +19,19 @@ class _UsersPageState extends State<UsersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: const Text('Liste de clients'),
-        trailing: GestureDetector(
+    return Scaffold(
+      appBar: AppBar(title: const Text('Liste de clients'), actions: [
+        GestureDetector(
           child: const Icon(
-            CupertinoIcons.person_add,
+            Icons.person_add_alt,
           ),
           onTap: () async {
-            addUser();
+            await addUser();
           },
         ),
-      ),
-      child: SafeArea(
+        const SizedBox(width: 20),
+      ]),
+      body: SafeArea(
         child: Center(
           child: StreamBuilder<QuerySnapshot>(
             stream: _usersStream,
@@ -44,17 +43,16 @@ class _UsersPageState extends State<UsersPage> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Text('Chargement');
               }
-              return CupertinoListSection(
+              return ListView(
                 children: snapshot.data!.docs
                     .map(
                       (DocumentSnapshot document) {
                         Map<String, dynamic> data =
                             document.data()! as Map<String, dynamic>;
                         String uid = document.id;
-                        return CupertinoListTile(
+                        return ListTile(
                           title: Text('${data['fullname']}'),
                           subtitle: Text('Username: ${data['username']}'),
-                          trailing: const CupertinoListTileChevron(),
                           onTap: () async {
                             await actionUser(uid: uid);
                           },
@@ -72,35 +70,43 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   Future actionUser({required String uid}) async {
-    await showCupertinoDialog(
+    await showDialog(
       context: context,
       barrierDismissible: true,
       builder: (context) {
-        return CupertinoAlertDialog(
+        return AlertDialog(
           title: const Text('Créer des clients'),
+          content: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  child: const Text('Modifier le client'),
+                  onPressed: () async {
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                    await deleteUser(uid: uid);
+                  },
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  child: const Text('Supprimer le client'),
+                  onPressed: () async {
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                    await updateUser(uid: uid);
+                  },
+                ),
+              ],
+            ),
+          ),
           actions: [
-            CupertinoDialogAction(
-              isDestructiveAction: true,
-              child: const Text('Modifier le client'),
-              onPressed: () async {
-                if (Navigator.canPop(context)) {
-                  Navigator.pop(context);
-                }
-                await deleteUser(uid: uid);
-              },
-            ),
-            CupertinoDialogAction(
-              child: const Text('Supprimer le client'),
-              onPressed: () async {
-                if (Navigator.canPop(context)) {
-                  Navigator.pop(context);
-                }
-                await updateUser(uid: uid);
-              },
-            ),
-            CupertinoDialogAction(
-              child: const Text('Fermer',
-                  style: TextStyle(color: CupertinoColors.label)),
+            TextButton(
+              child: const Text('Fermer'),
               onPressed: () {
                 if (Navigator.canPop(context)) {
                   Navigator.pop(context);
@@ -116,37 +122,35 @@ class _UsersPageState extends State<UsersPage> {
   Future addUser() async {
     TextEditingController controllerUsername = TextEditingController(text: '');
     TextEditingController controllerFullname = TextEditingController(text: '');
-    await showCupertinoDialog(
+    await showDialog(
       context: context,
       barrierDismissible: true,
       builder: (context) {
-        return CupertinoAlertDialog(
+        return AlertDialog(
           title: const Text('Créer des clients'),
           content: Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('Nom de connexion'),
                 const SizedBox(height: 3),
-                CupertinoTextField(
-                  decoration: Const.decoration,
+                TextField(
                   controller: controllerUsername,
                   autofocus: true,
                 ),
                 const SizedBox(height: 10),
                 const Text('Nom et prénom'),
                 const SizedBox(height: 3),
-                CupertinoTextField(
-                  decoration: Const.decoration,
+                TextField(
                   controller: controllerFullname,
                 ),
               ],
             ),
           ),
           actions: [
-            CupertinoDialogAction(
-              isDefaultAction: true,
+            ElevatedButton(
               child: const Text('Créer'),
               onPressed: () async {
                 if (controllerFullname.text.isNotEmpty &&
@@ -192,10 +196,8 @@ class _UsersPageState extends State<UsersPage> {
                 }
               },
             ),
-            CupertinoDialogAction(
-              isDestructiveAction: true,
-              child: const Text('Fermer',
-                  style: TextStyle(color: CupertinoColors.label)),
+            TextButton(
+              child: const Text('Fermer'),
               onPressed: () {
                 if (Navigator.canPop(context)) {
                   Navigator.pop(context);
@@ -216,33 +218,30 @@ class _UsersPageState extends State<UsersPage> {
           'fullname': data['fullname'],
           'username': data['username'],
         };
-        await showCupertinoDialog(
+        await showDialog(
           context: context,
           barrierDismissible: true,
           builder: (context) {
             TextEditingController controllerFullname = TextEditingController();
             controllerFullname.text = user['fullname'];
-            return CupertinoAlertDialog(
+            return AlertDialog(
               title: const Text('Supprimer le client'),
               content: Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 10),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Nom et prénom'),
                     const SizedBox(height: 3),
-                    CupertinoTextField(
-                      decoration: const BoxDecoration(
-                        color: CupertinoColors.systemBackground,
-                      ),
+                    TextField(
                       controller: controllerFullname,
                     ),
                   ],
                 ),
               ),
               actions: [
-                CupertinoDialogAction(
-                  isDefaultAction: true,
+                ElevatedButton(
                   child: const Text('Mise à jour'),
                   onPressed: () async {
                     await db.collection('users').doc(uid).update({
@@ -260,10 +259,8 @@ class _UsersPageState extends State<UsersPage> {
                     });
                   },
                 ),
-                CupertinoDialogAction(
-                  isDestructiveAction: true,
-                  child: const Text('Fermer',
-                      style: TextStyle(color: CupertinoColors.label)),
+                TextButton(
+                  child: const Text('Fermer'),
                   onPressed: () {
                     if (Navigator.canPop(context)) {
                       Navigator.pop(context);
@@ -282,15 +279,16 @@ class _UsersPageState extends State<UsersPage> {
     db.collection('users').doc(uid).get().then((snapshot) async {
       final data = snapshot.data();
       if (data!.isNotEmpty) {
-        await showCupertinoDialog(
+        await showDialog(
           context: context,
           barrierDismissible: true,
           builder: (context) {
-            return CupertinoAlertDialog(
+            return AlertDialog(
               title: const Text('Supprimer ce compte client?'),
               content: Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Nom de connexion: ${data['username']}'),
@@ -300,8 +298,7 @@ class _UsersPageState extends State<UsersPage> {
                 ),
               ),
               actions: [
-                CupertinoDialogAction(
-                  isDestructiveAction: true,
+                ElevatedButton(
                   child: const Text('Confirmer'),
                   onPressed: () async {
                     await db.collection('users').doc(uid).delete().then((e) {
@@ -317,9 +314,8 @@ class _UsersPageState extends State<UsersPage> {
                     });
                   },
                 ),
-                CupertinoDialogAction(
-                  child: const Text('Fermer',
-                      style: TextStyle(color: CupertinoColors.label)),
+                TextButton(
+                  child: const Text('Fermer'),
                   onPressed: () {
                     if (Navigator.canPop(context)) {
                       Navigator.pop(context);

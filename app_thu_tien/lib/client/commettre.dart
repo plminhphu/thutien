@@ -1,9 +1,7 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
-import 'package:app_thu_tien/const.dart';
 import 'package:app_thu_tien/model/pay.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -32,11 +30,11 @@ class _CommettrePageState extends State<CommettrePage> {
   TextEditingController reelCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Commettre'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Commettre'),
       ),
-      child: SafeArea(
+      body: SafeArea(
         child: SizedBox(
           width: context.width,
           height: context.height,
@@ -46,9 +44,9 @@ class _CommettrePageState extends State<CommettrePage> {
                 padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                 child: Table(
                   border: const TableBorder(
-                    top: BorderSide(color: CupertinoColors.systemGrey2),
-                    left: BorderSide(color: CupertinoColors.systemGrey2),
-                    right: BorderSide(color: CupertinoColors.systemGrey2),
+                    top: BorderSide(color: Colors.grey),
+                    left: BorderSide(color: Colors.grey),
+                    right: BorderSide(color: Colors.grey),
                   ),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
@@ -57,7 +55,7 @@ class _CommettrePageState extends State<CommettrePage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: Text(
                               'Date: $dateWhere',
                               style: const TextStyle(
@@ -69,43 +67,31 @@ class _CommettrePageState extends State<CommettrePage> {
                         TableCell(
                           child: GestureDetector(
                             onTap: () async {
-                              showCupertinoModalPopup<void>(
+                              showDatePicker(
                                 context: context,
-                                builder: (BuildContext context) => Container(
-                                  height: 216,
-                                  padding: const EdgeInsets.only(top: 6.0),
-                                  margin: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom,
-                                  ),
-                                  color: CupertinoColors.systemBackground
-                                      .resolveFrom(context),
-                                  child: SafeArea(
-                                    top: false,
-                                    child: CupertinoDatePicker(
-                                      initialDateTime: dateTime,
-                                      minimumDate: dateTime
-                                          .subtract(const Duration(days: 3)),
-                                      maximumDate:
-                                          dateTime.add(const Duration(days: 7)),
-                                      mode: CupertinoDatePickerMode.date,
-                                      showDayOfWeek: false,
-                                      onDateTimeChanged: (DateTime dt) {
-                                        setState(() {
-                                          dateTime = dt;
-                                          dateWhere =
-                                              '${dateTime.day}/${dateTime.month}/${dateTime.year}';
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
+                                initialDate: dateTime,
+                                firstDate:
+                                    dateTime.subtract(const Duration(days: 3)),
+                                lastDate: dateTime.add(const Duration(days: 7)),
+                              ).then(
+                                (value) {
+                                  if (value != null) {
+                                    setState(() {
+                                      dateTime = value;
+                                      dateWhere =
+                                          '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+                                    });
+                                  }
+                                },
                               );
                             },
                             child: const Row(
                               children: [
-                                Icon(CupertinoIcons.calendar),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  child: Icon(Icons.calendar_today_outlined),
+                                ),
+                                Text('Choose day'),
                               ],
                             ),
                           ),
@@ -119,14 +105,12 @@ class _CommettrePageState extends State<CommettrePage> {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Table(
                   border: const TableBorder(
-                    top: BorderSide(color: CupertinoColors.systemGrey2),
-                    left: BorderSide(color: CupertinoColors.systemGrey2),
-                    right: BorderSide(color: CupertinoColors.systemGrey2),
-                    bottom: BorderSide(color: CupertinoColors.systemGrey2),
-                    horizontalInside:
-                        BorderSide(color: CupertinoColors.systemGrey2),
-                    verticalInside:
-                        BorderSide(color: CupertinoColors.systemGrey2),
+                    top: BorderSide(color: Colors.grey),
+                    left: BorderSide(color: Colors.grey),
+                    right: BorderSide(color: Colors.grey),
+                    bottom: BorderSide(color: Colors.grey),
+                    horizontalInside: BorderSide(color: Colors.grey),
+                    verticalInside: BorderSide(color: Colors.grey),
                   ),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
@@ -135,7 +119,7 @@ class _CommettrePageState extends State<CommettrePage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'Manucure',
                               textAlign: TextAlign.center,
@@ -148,7 +132,7 @@ class _CommettrePageState extends State<CommettrePage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'Coiffure',
                               textAlign: TextAlign.center,
@@ -167,13 +151,11 @@ class _CommettrePageState extends State<CommettrePage> {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Table(
                   border: const TableBorder(
-                    left: BorderSide(color: CupertinoColors.systemGrey2),
-                    right: BorderSide(color: CupertinoColors.systemGrey2),
-                    bottom: BorderSide(color: CupertinoColors.systemGrey2),
-                    horizontalInside:
-                        BorderSide(color: CupertinoColors.systemGrey2),
-                    verticalInside:
-                        BorderSide(color: CupertinoColors.systemGrey2),
+                    left: BorderSide(color: Colors.grey),
+                    right: BorderSide(color: Colors.grey),
+                    bottom: BorderSide(color: Colors.grey),
+                    horizontalInside: BorderSide(color: Colors.grey),
+                    verticalInside: BorderSide(color: Colors.grey),
                   ),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
@@ -182,7 +164,7 @@ class _CommettrePageState extends State<CommettrePage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'ESP',
                               textAlign: TextAlign.center,
@@ -195,7 +177,7 @@ class _CommettrePageState extends State<CommettrePage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'CB',
                               textAlign: TextAlign.center,
@@ -208,7 +190,7 @@ class _CommettrePageState extends State<CommettrePage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'ESP',
                               textAlign: TextAlign.center,
@@ -221,7 +203,7 @@ class _CommettrePageState extends State<CommettrePage> {
                         TableCell(
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            color: CupertinoColors.white,
+                            color: Colors.white,
                             child: const Text(
                               'CB',
                               textAlign: TextAlign.center,
@@ -249,17 +231,14 @@ class _CommettrePageState extends State<CommettrePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: CupertinoListTile(
+                child: ListTile(
                   leading: const SizedBox(
                     width: 60,
                     child: Text('ESP réel', textAlign: TextAlign.start),
                   ),
-                  leadingSize: 60,
-                  leadingToTitle: 10,
-                  title: CupertinoTextField(
+                  title: TextField(
                     key: const Key('reel'),
                     controller: reelCtrl,
-                    decoration: Const.decoration,
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
                       reel.value = double.tryParse(value) ?? 0;
@@ -277,24 +256,15 @@ class _CommettrePageState extends State<CommettrePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CupertinoButton(
-                      color: CupertinoColors.separator,
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: const Text('Fermer',
-                          style: TextStyle(
-                            color: CupertinoColors.label,
-                          )),
+                    TextButton(
+                      child: const Text('Fermer'),
                       onPressed: () {
                         if (Navigator.canPop(context)) {
                           Navigator.pop(context);
                         }
                       },
                     ),
-                    CupertinoButton(
-                      color: resReel
-                          ? CupertinoColors.activeBlue
-                          : CupertinoColors.label,
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                    ElevatedButton(
                       child: const Text('Commettre'),
                       onPressed: () {
                         if (resReel) {
@@ -482,11 +452,11 @@ class _ItemState extends State<Item> {
   Widget build(BuildContext context) {
     return Table(
       border: const TableBorder(
-        left: BorderSide(color: CupertinoColors.systemGrey2),
-        right: BorderSide(color: CupertinoColors.systemGrey2),
-        bottom: BorderSide(color: CupertinoColors.systemGrey2),
-        horizontalInside: BorderSide(color: CupertinoColors.systemGrey2),
-        verticalInside: BorderSide(color: CupertinoColors.systemGrey2),
+        left: BorderSide(color: Colors.grey),
+        right: BorderSide(color: Colors.grey),
+        bottom: BorderSide(color: Colors.grey),
+        horizontalInside: BorderSide(color: Colors.grey),
+        verticalInside: BorderSide(color: Colors.grey),
       ),
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: widget.dataR
