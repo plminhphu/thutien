@@ -1,3 +1,3 @@
 class Const {
-  static bool isAdmin = true;
+  static bool isAdmin = false;
 }

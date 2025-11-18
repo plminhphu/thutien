@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlobalLoaderOverlay(
-      overlayColor: Colors.black.withOpacity(.3),
+      overlayColor: Colors.black87,
       overlayWidgetBuilder: (_) {
         return const Center(child: CircularProgressIndicator());
       },
