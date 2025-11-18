@@ -1,4 +1,4 @@
-package vn.plminhphu.admin_thu_tien
+package vn.pahy.money_management
 
 import io.flutter.embedding.android.FlutterActivity
 

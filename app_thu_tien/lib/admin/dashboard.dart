@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:app_thu_tien/admin/users.dart';
-import 'package:app_thu_tien/client/commettre.dart';
-import 'package:app_thu_tien/model/pay.dart';
+import 'package:money_management/admin/users.dart';
+import 'package:money_management/client/commettre.dart';
+import 'package:money_management/model/pay.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

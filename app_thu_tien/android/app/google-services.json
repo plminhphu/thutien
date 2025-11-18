@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "609347119880",
+    "project_id": "thutien-123",
+    "storage_bucket": "thutien-123.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609347119880:android:50b335f5a250ce65e31abd",
+        "android_client_info": {
+          "package_name": "vn.pahy.mmad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE6_aB39OP1Vdt53ljwtOETa6qy7ZnjJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609347119880:android:0dbdb2aaea4d6d4fe31abd",
+        "android_client_info": {
+          "package_name": "vn.pahy.mmcl"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE6_aB39OP1Vdt53ljwtOETa6qy7ZnjJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609347119880:android:057289b6cdbb4804e31abd",
+        "android_client_info": {
+          "package_name": "vn.pahy.money_management"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE6_aB39OP1Vdt53ljwtOETa6qy7ZnjJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

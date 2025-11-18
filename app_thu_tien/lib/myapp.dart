@@ -1,6 +1,6 @@
-import 'package:app_thu_tien/admin/dashboard.dart';
-import 'package:app_thu_tien/client/auth.dart';
-import 'package:app_thu_tien/const.dart';
+import 'package:money_management/admin/dashboard.dart';
+import 'package:money_management/client/auth.dart';
+import 'package:money_management/const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
